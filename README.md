@@ -1,2 +1,3 @@
 # shop-nodejs-aws-serverless
-Backend for E-Commerce application (Shop) created with NodeJS, AWS Cloud and Serverless architecture and Serverless framework
+This is backend starter project for nodejs-aws mentoring program.
+Link to the frontend project: https://github.com/LipinArts/shop-react-redux-cloudfront
