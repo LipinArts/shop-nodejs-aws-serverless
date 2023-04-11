@@ -8,7 +8,7 @@ export const getProductsList: NotValidatedEventAPIGatewayProxyEvent = async () =
     const products = await getAllProducts();
     return formatJSONResponse(products);
   } catch (error) {
-    return formatJSONResponse({message: error},  500);
+    return formatJSONResponse({ message: error }, 500);
   }
 };
 

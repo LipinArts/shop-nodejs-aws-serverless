@@ -5,19 +5,24 @@
   "main": "serverless.ts",
   "scripts": {
     "deploy": "sls deploy",
-    "serverless-invoke-local": "sls invoke local -f getProductsList"
+    "serverless-invoke-local": "sls invoke local -f getProductsList",
+    "seed-data": "ts-node src/scripts/seedData"
   },
   "engines": {
     "node": ">=14.15.0"
   },
   "dependencies": {
     "@middy/core": "^3.4.0",
-    "@middy/http-json-body-parser": "^3.4.0"
+    "@middy/http-json-body-parser": "^3.4.0",
+    "@aws-sdk/client-dynamodb": "^3.309.0",
+    "dotenv": "^16.0.3",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@serverless/typescript": "^3.0.0",
     "@types/aws-lambda": "^8.10.71",
     "@types/node": "^14.14.25",
+    "@types/aws-sdk": "^2.7.0",
     "esbuild": "^0.14.11",
     "json-schema-to-ts": "^1.5.0",
     "serverless": "^3.0.0",

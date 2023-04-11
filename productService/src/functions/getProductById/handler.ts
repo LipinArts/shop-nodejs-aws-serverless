@@ -6,12 +6,12 @@ import { getProductById } from "src/services/productService";
 export const getProductsById: NotValidatedEventAPIGatewayProxyEvent = async (event) => {
   try {
     const product = await getProductById(event.pathParameters.productId);
-    if(!product) {
-      return formatJSONResponse({message: "Product not found"},  404);
+    if (!product) {
+      return formatJSONResponse({ message: "Product not found" }, 404);
     }
     return formatJSONResponse(product);
   } catch (error) {
-    return formatJSONResponse({message: error},  500);
+    return formatJSONResponse({ message: error }, 500);
   }
 };
 
