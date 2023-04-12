@@ -5,24 +5,29 @@
   "main": "serverless.ts",
   "scripts": {
     "deploy": "sls deploy",
-    "serverless-invoke-local": "sls invoke local -f getProductsList",
+    "serverless-invoke-getProductsList": "sls invoke local -f getProductsList",
+    "serverless-invoke-getProductsById": "sls invoke local -f getProductById --data '{\"pathParameters\": { \"productId\": \"7567ec4b-b10c-48c5-9445-fc73c48a80a2\"} }'",
+    "serverless-invoke-gcreateProduct": "sls invoke local -f createProduct --data '{\"body\": { \"title\": \"New Product\", \"description\": \"New description\", \"price\": 1, \"count\": 2 } }'",
     "seed-data": "ts-node src/scripts/seedData"
   },
   "engines": {
     "node": ">=14.15.0"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.309.0",
+    "@aws-sdk/lib-dynamodb": "^3.309.0",
     "@middy/core": "^3.4.0",
     "@middy/http-json-body-parser": "^3.4.0",
-    "@aws-sdk/client-dynamodb": "^3.309.0",
     "dotenv": "^16.0.3",
+    "joi": "^17.9.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@serverless/typescript": "^3.0.0",
     "@types/aws-lambda": "^8.10.71",
-    "@types/node": "^14.14.25",
     "@types/aws-sdk": "^2.7.0",
+    "@types/node": "^14.14.25",
+    "@types/uuid": "^9.0.1",
     "esbuild": "^0.14.11",
     "json-schema-to-ts": "^1.5.0",
     "serverless": "^3.0.0",

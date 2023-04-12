@@ -1,6 +1,7 @@
 import type { AWS } from "@serverless/typescript";
 import getProductsList from "@functions/getProductsList";
 import getProductById from "@functions/getProductById";
+import createProduct from "@functions/createProduct";
 
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -27,8 +28,8 @@ const serverlessConfiguration: AWS = {
       role: {
         statements: [
           {
-            Effect: 'Allow',
-            Action: ['dynamodb:*'],
+            Effect: "Allow",
+            Action: ["dynamodb:*"],
             Resource: [
               process.env.PRODUCTS_TABLE,
               process.env.STOCKS_TABLE,
@@ -39,7 +40,7 @@ const serverlessConfiguration: AWS = {
    },
   },
   // import the function via paths
-  functions: { getProductsList, getProductById },
+  functions: { getProductsList, getProductById, createProduct },
   package: { individually: true },
   custom: {
     esbuild: {
