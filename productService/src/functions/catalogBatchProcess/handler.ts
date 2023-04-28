@@ -11,6 +11,7 @@ export const catalogBatchProcess = async (event: SQSEvent) => {
     console.log(`Lambda function 'catalogBatchProcess' invoked with event: ${JSON.stringify(event)}`);
     for (const record of event.Records) {
       const parsedRecord = JSON.parse(record.body);
+      const { title, description, price, count } = parsedRecord;
       const { error } = productSchema.validate(parsedRecord);
       if (error) {
         return formatJSONResponse({ error: error.message }, 400);
@@ -21,7 +22,7 @@ export const catalogBatchProcess = async (event: SQSEvent) => {
       await snsClient.send(
         new PublishCommand({
           Subject: "New product created",
-          Message: `Product successfully created with id: ${createdProductId}`,
+          Message: JSON.stringify({ title, description, price: parseInt(price), count: parseInt(count), id: createdProductId }),
           TopicArn: process.env.SNS_ARN,
         })
       )
