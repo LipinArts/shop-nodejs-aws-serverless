@@ -1,23 +1,20 @@
-import type { ValidatedEventAPIGatewayProxyEvent } from "@libs/api-gateway";
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { formatJSONResponse } from "@libs/api-gateway";
 import { middyfy } from "@libs/lambda";
 import { createNewProduct } from "src/services/productService";
-import schema from './schema';
-import { productSchema } from './validationSchema';
+import { productSchema } from "./validationSchema";
 
-export const createProduct: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
+export const createProduct = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   try {
     console.log(`Lambda function 'createProduct' invoked with event: ${JSON.stringify(event)}`);
+    const parsedBody = JSON.parse(event.body);
     // Validate the product data using Joi
-    const { error } = productSchema.validate(event.body);
+    const { error } = productSchema.validate(parsedBody);
     if (error) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ message: error.message })
-      };
+      return formatJSONResponse({ error: error.message }, 400);
     }
-
-    return formatJSONResponse({ id: await createNewProduct(event.body) });
+    const createdProductId = await createNewProduct(parsedBody);
+    return formatJSONResponse({ id: createdProductId });
   } catch (error) {
     return formatJSONResponse({ error: error.message }, 500);
   }

@@ -20,6 +20,8 @@ const serverlessConfiguration: AWS = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
       NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000",
       S3_BUCKET_NAME: process.env.S3_BUCKET_NAME,
+      SQS_ARN: process.env.SQS_ARN,
+      SQS_URL: process.env.SQS_URL,
     },
     iam: {
       role: {
@@ -29,6 +31,13 @@ const serverlessConfiguration: AWS = {
           Resource: [
             `arn:aws:s3:::${process.env.S3_BUCKET_NAME}`,
             `arn:aws:s3:::${process.env.S3_BUCKET_NAME}/*`,
+          ],
+        },
+        {
+          Effect: "Allow",
+          Action: ["sqs:*"],
+          Resource: [
+            process.env.SQS_ARN
           ],
         }]
       }
